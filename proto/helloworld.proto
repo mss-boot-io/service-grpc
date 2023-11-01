@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package helloworld;
+
+option go_package = "./proto;helloworld";
+
+service Helloworld {
+  rpc Call(CallRequest) returns (CallResponse) {};
+}
+
+// Return a personalised Hello message
+message CallRequest {
+  // name to append to the message e.g Alice
+  string name = 1;
+}
+
+message CallResponse {
+  // message including name e.g Hello Alice
+  string message = 1;
+}
