@@ -2,16 +2,14 @@ package server
 
 import (
 	"context"
+	"service-grpc/handlers"
+	pb "service-grpc/proto"
 
-	"github.com/gin-gonic/gin"
 	"github.com/mss-boot-io/mss-boot/core/server"
-	"github.com/mss-boot-io/mss-boot/core/server/listener"
-	"github.com/mss-boot-io/mss-boot/pkg/response/actions/virtual"
+	"github.com/mss-boot-io/mss-boot/core/server/grpc"
 	"github.com/spf13/cobra"
-	"service-http/config"
-	"service-http/models"
 
-	"service-http/router"
+	"service-grpc/config"
 )
 
 /*
@@ -38,27 +36,9 @@ var (
 
 func setup() error {
 	// setup config
-	config.Cfg.Init()
-
-	r := gin.Default()
-	router.Init(r.Group("/"))
-
-	runnable := []server.Runnable{
-		config.Cfg.Server.Init(
-			listener.WithName("service-http"),
-			listener.WithHandler(r)),
-	}
-
-	// init virtual models
-	ms, err := models.GetModels()
-	if err != nil {
-		return err
-	}
-	for i := range ms {
-		virtual.SetModel(ms[i].Path, ms[i].MakeVirtualModel())
-	}
-	server.Manage.Add(runnable...)
-
+	config.Cfg.Init(func(srv *grpc.Server) {
+		pb.RegisterHelloworldServer(srv.Server(), handlers.NewHandler())
+	})
 	return nil
 }
 

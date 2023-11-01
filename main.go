@@ -7,6 +7,8 @@
 
 package main
 
-func main() {
+import "service-grpc/cmd"
 
+func main() {
+	cmd.Execute()
 }

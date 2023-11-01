@@ -8,7 +8,6 @@ import (
 	"github.com/mss-boot-io/mss-boot/pkg"
 	"github.com/spf13/cobra"
 
-	"service-grpc/cmd/migrate"
 	"service-grpc/cmd/server"
 )
 
@@ -46,7 +45,6 @@ func tip() {
 
 func init() {
 	rootCmd.AddCommand(server.StartCmd)
-	rootCmd.AddCommand(migrate.StartCmd)
 }
 
 // Execute : apply commands

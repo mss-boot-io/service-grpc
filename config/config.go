@@ -16,6 +16,8 @@ import (
 	"github.com/mss-boot-io/mss-boot/pkg/config/source"
 )
 
+var Cfg Config
+
 type Config struct {
 	Server config.GRPC    `yaml:"server" json:"server"`
 	Listen *config.Listen `yaml:"listen" json:"listen"`
